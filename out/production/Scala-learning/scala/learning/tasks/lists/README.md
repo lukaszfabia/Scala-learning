@@ -125,3 +125,18 @@ list.head * list.head :: sqrtList(list.tail)
 ```
 
 `:::` konkatenacja dwóch list.
+
+Przykład użycia:
+
+```scala
+List(list.head * list.head) ::: sqrtList(list.tail)
+```
+
+`list.last` wskaźnik na ostani element listy
+
+`list.head` wskaźnik pierwszy element listy
+
+`list.tail` wskaźnika na reszte listy
+
+
+Dlatego przy poruszaniu się rekurencyjnie po liście należy używać `list.tail` i sprawdzać przy tym czy lista nie jest pusta.

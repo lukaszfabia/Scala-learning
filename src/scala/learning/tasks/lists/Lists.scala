@@ -15,6 +15,8 @@ object Lists {
     println(findMaxValue(List(0, 1, 2, 32, 3, 14, 1)))
     println(filterOddNumbers(List(1, 2, 3, 4, 5, 6, 7, 8)))
     println(fibonacciSequence(4))
+    println("Insert: " + insert(List("to", "jest", "kon"), 2, "kot"))
+    println("Substitute: " + substitute(List("to", "jest", "kon"), "kon", "kot"))
   }
 
   /*
@@ -155,6 +157,34 @@ object Lists {
         List(0, 1)
       } else {
         fibonacciSequence(n - 1) ::: List(fibonacciSequence(n - 1).last + fibonacciSequence(n - 2).last)
+      }
+    } else {
+      Nil
+    }
+  }
+
+  private def reverseFourElements[A, B, C, D](list: (A, B, C, D)): (D, C, B, A) = {
+    (list._4, list._3, list._2, list._1)
+  }
+
+  private def substitute[T](list: List[T], oldElement: T, newElement: T): List[T] = {
+    if (list.nonEmpty) {
+      if (list.head == oldElement) {
+        newElement :: substitute(list.tail, oldElement, newElement)
+      } else {
+        list.head :: substitute(list.tail, oldElement, newElement)
+      }
+    } else {
+      Nil
+    }
+  }
+
+  private def insert[T](list: List[T], index: Int, element: T): List[T] = {
+    if (list.nonEmpty) {
+      if (index == 0) {
+        element :: list
+      } else {
+        list.head :: insert(list.tail, index - 1, element)
       }
     } else {
       Nil
