@@ -1,29 +1,127 @@
-1. **Reverse List Elements:**
-   Napisz funkcję, która odwraca kolejność elementów w liście. Przykład: `reverseList(List(1, 2, 3))` powinno zwrócić `List(3, 2, 1)`.
+# Scala Learning - Zadania na Listach
 
-2. **Filter Odd Numbers:**
-   Stwórz funkcję, która przyjmuje listę liczb całkowitych i zwraca nową listę zawierającą tylko parzyste liczby. Przykład: `filterOddNumbers(List(1, 2, 3, 4, 5))` powinno zwrócić `List(2, 4)`.
+Ten pakiet zawiera różne zadania dotyczące list w języku programowania Scala. Poniżej znajdziesz opisy i przykłady każdego z tych zadań.
 
-3. **Flatten Nested Lists:**
-   Napisz funkcję, która spłaszcza zagnieżdżone listy. Przykład: `flattenList(List(List(1, 2), List(3, 4), List(5, 6)))` powinno zwrócić `List(1, 2, 3, 4, 5, 6)`.
+## Zadania
 
-4. **Find Maximum Value:**
-   Stwórz funkcję, która znajduje maksymalną wartość w liście liczb całkowitych. Przykład: `findMaxValue(List(3, 8, 2, 10, 5))` powinno zwrócić `10`.
+### 1. `countElement`
 
-5. **Remove Duplicates:**
-   Napisz funkcję, która usuwa z listy wszystkie powtórzenia, pozostawiając tylko unikalne elementy. Przykład: `removeDuplicates(List(1, 2, 2, 3, 4, 4, 5))` powinno zwrócić `List(1, 2, 3, 4, 5)`.
+Funkcja `countElement(element: T, list: List[T]): Int` zlicza ilość wystąpień określonego elementu w liście.
 
-6. **Calculate Fibonacci Sequence:**
-   Stwórz funkcję, która generuje ciąg Fibonacciego do n-tego elementu. Przykład: `fibonacciSequence(7)` powinno zwrócić `List(0, 1, 1, 2, 3, 5, 8)`.
+Przykład użycia:
 
-7. **Zip Lists:**
-   Napisz funkcję, która scala dwie listy w pary elementów. Przykład: `zipLists(List(1, 2, 3), List("a", "b", "c"))` powinno zwrócić `List((1, "a"), (2, "b"), (3, "c"))`.
+```scala
+println(countElement(4, List(1, 1, 1, 2, 2))) // Oczekiwany wynik: 0
+```
 
-8. **Split List at Index:**
-   Stwórz funkcję, która dzieli listę na dwie części w określonym miejscu. Przykład: `splitList(List(1, 2, 3, 4, 5), 2)` powinno zwrócić `(List(1, 2), List(3, 4, 5))`.
 
-9. **Calculate Factorials:**
-   Napisz funkcję, która generuje listę silni dla podanej listy liczb całkowitych. Przykład: `calculateFactorials(List(3, 5, 2))` powinno zwrócić `List(6, 120, 2)`.
+### 2. `mergeList`
 
-10. **Remove Nth Element:**
-    Stwórz funkcję, która usuwa n-ty element z listy. Przykład: `removeNthElement(List(1, 2, 3, 4, 5), 2)` powinno zwrócić `List(1, 3, 4, 5)`.
+Funkcja `mergeList(list: List[List[T]]): List[T]` łączy listy list w jedną listę.
+
+Przykład użycia:
+
+```scala
+println(mergeList(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9)))) // Oczekiwany wynik: List(1, 2, 3, 4, 5, 6, 7, 8, 9)
+```
+
+### 3. `replicate`
+
+Funkcja `replicate(element: T, n: Int): List[T]` tworzy listę powtórzeń danego elementu.
+
+Przykład użycia:
+
+```scala
+println(replicate("Yes", 3)) // Oczekiwany wynik: List("Yes", "Yes", "Yes")
+```
+
+### 4. `sqrtList`
+
+Funkcja `sqrtList(list: List[Int]): List[Int]` zwraca listę kwadratów liczb z listy.
+
+Przykład użycia:
+
+```scala
+println(sqrtList(List(1, 2, 3, 4, 5))) // Oczekiwany wynik: List(1, 4, 9, 16, 25)
+```
+
+### 5. `palindrome`
+
+Funkcja `palindrome(list: List[T]): Boolean` sprawdza, czy lista jest palindromem.
+
+Przykład użycia:
+
+```scala
+println("Palindrome: " + palindrome(List(true, false, false, true))) // Oczekiwany wynik: true
+```
+
+### 6. `listLength`
+
+Funkcja `listLength(list: List[T]): Int` zwraca długość listy.
+
+Przykład użycia:
+
+```scala
+println(listLength(List(1, 2, 12, 1, 2, 32, 1, 3, 13, 12, 312))) // Oczekiwany wynik: 11
+```
+
+### 7. `reverseList`
+
+Funkcja `reverseList(list: List[T]): List[T]` odwraca listę.
+
+Przykład użycia:
+
+```scala
+println(reverseList(List(1, 2, 3))) // Oczekiwany wynik: List(3, 2, 1)
+```
+
+### 8. `removeDuplicates`
+
+Funkcja `removeDuplicates(list: List[T]): List[T]` usuwa z listy duplikaty.
+
+Przykład użycia:
+
+```scala
+println("Remove duplicates: " + removeDuplicates(List(1, 2, 32, 3, 1, 123, 3, 1))) // Oczekiwany wynik: List(1, 2, 32, 3, 123)
+```
+
+### 9. `findMaxValue`
+
+Funkcja `findMaxValue(list: List[Int]): Int` znajduje maksymalną wartość w liście.
+
+Przykład użycia:
+
+```scala
+println(findMaxValue(List(0, 1, 2, 32, 3, 14, 1))) // Oczekiwany wynik: 32
+```
+
+### 10. `filterOddNumbers`
+
+Funkcja `filterOddNumbers(list: List[Int]): List[Int]` filtruje nieparzyste liczby z listy.
+
+Przykład użycia:
+
+```scala
+println(filterOddNumbers(List(1, 2, 3, 4, 5, 6, 7, 8))) // Oczekiwany wynik: List(2, 4, 6, 8)
+```
+
+### 11. `fibonacciSequence`
+
+Funkcja `fibonacciSequence(n: Int): List[Int]` generuje sekwencję Fibonacciego o długości `n`.
+
+Przykład użycia:
+
+```scala
+println(fibonacciSequence(4)) // Oczekiwany wynik: List(0, 1, 1, 2)
+```
+
+## Wnioski
+`::`  służy do dodawania elementu na początek listy.
+
+Przykład użycia: 
+
+```scala
+list.head * list.head :: sqrtList(list.tail)
+```
+
+`:::` konkatenacja dwóch list.
