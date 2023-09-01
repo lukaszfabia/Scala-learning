@@ -191,4 +191,19 @@ object Lists {
       List(element)
     }
   }
+
+  private def set[T](list: List[T], index: Int): List[T] = {
+    // TODO
+    Nil
+  }
+
+  private def removeNthElement[T](list: List[T], n: Int): List[T] = {
+    // TODO
+    Nil
+  }
+
+  private def isSorted(list: List[Int]): Boolean = {
+    // TODO
+    false
+  }
 }
