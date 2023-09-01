@@ -16,6 +16,7 @@ object Lists {
     println(filterOddNumbers(List(1, 2, 3, 4, 5, 6, 7, 8)))
     println(fibonacciSequence(4))
     println("Insert: " + insert(List("to", "jest", "kon"), 2, "kot"))
+    println("Insert do pustej listy: " + insert(List(), 0, "kot"))
     println("Substitute: " + substitute(List("to", "jest", "kon"), "kon", "kot"))
   }
 
@@ -187,7 +188,7 @@ object Lists {
         list.head :: insert(list.tail, index - 1, element)
       }
     } else {
-      Nil
+      List(element)
     }
   }
 }

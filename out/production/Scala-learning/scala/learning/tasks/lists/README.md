@@ -115,6 +115,34 @@ Przykład użycia:
 println(fibonacciSequence(4)) // Oczekiwany wynik: List(0, 1, 1, 2)
 ```
 
+### 12. `reverseFour`
+
+Funkcja `reverseFourElements[A, B, C, D](list: (A, B, C, D)): (D,C,B,A)` odwraca co cztery elementy listy.
+
+```scala
+println(reverseFourElements(List(true, "STRING", 12, 5.412))) // Oczekiwany wynik: List(5.412, 12, "STRING", true)
+```
+
+### 13. `substitute`
+
+Funkcja `substitute[T](list: List[T], oldElement: T, newElement: T): List[T]` ustawi nową wartość dla wszystkich wystąpień starej wartości.
+
+Przykład użycia:
+
+```scala
+println(substitute(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 5, 0)) // Oczekiwany wynik: List(1, 2, 3, 4, 0, 6, 7, 8, 9, 10)
+```
+
+### 14. `insert`
+
+Funkcja `insert[T](list: List[T], index: Int, element: T): List[T]` wstawia element na określone miejsce w liście, przsuwając resztę elementów listy.
+
+Przykład użycia:
+
+```scala
+println(insert(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 5, 0)) // Oczekiwany wynik: List(1, 2, 3, 4, 5, 0, 6, 7, 8, 9, 10)
+```
+
 ## Wnioski
 `::`  służy do dodawania elementu na początek listy.
 
