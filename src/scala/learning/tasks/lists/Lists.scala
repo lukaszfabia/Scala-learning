@@ -4,8 +4,13 @@ import scala.annotation.tailrec
 
 object Lists {
   def main(args: Array[String]): Unit = {
-    val tests = new TestsForLists()
-    tests.runTests()
+    //    val tests = new TestsForLists()
+    //    tests.runTests()
+
+    println(split2Rec(List(1)))
+    println(split2Rec(List(1, 2)))
+    println(split2Rec(List(1, 2, 3)))
+    println(split2Rec(List('a', 'b', 'c')))
   }
 
   /*
@@ -215,5 +220,44 @@ object Lists {
     } else {
       true
     }
+  }
+
+  @tailrec
+  def find[T](list: List[T], element: T): Boolean = {
+    if (list.nonEmpty) {
+      if (list.head == element) {
+        true
+      } else {
+        find(list.tail, element)
+      }
+    } else {
+      false
+    }
+  }
+
+  def split2Rec[T](list: List[T]): (List[T], List[T]) = {
+    @tailrec
+    def split[A](list: List[A], even: List[A], odd: List[A], isEven: Boolean): (List[A], List[A]) = {
+      list match {
+        case Nil => (even.reverse, odd.reverse)
+        case head :: tail =>
+          if (!isEven) {
+            split(tail, even, head :: odd, !isEven)
+          } else {
+            split(tail, head :: even, odd, !isEven)
+          }
+      }
+    }
+
+    if (list.nonEmpty) {
+      split(list, Nil, Nil, isEven = false)
+    } else {
+      (Nil, Nil)
+    }
+  }
+
+  def split2Tail[T](list: List[T]): (List[T], List[T]) = {
+    // todo nie wiem jak to zrobic
+    Nil -> Nil
   }
 }
