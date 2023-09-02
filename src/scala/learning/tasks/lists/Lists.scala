@@ -4,13 +4,8 @@ import scala.annotation.tailrec
 
 object Lists {
   def main(args: Array[String]): Unit = {
-    //    val tests = new TestsForLists()
-    //    tests.runTests()
-
-    println(split2Rec(List(1)))
-    println(split2Rec(List(1, 2)))
-    println(split2Rec(List(1, 2, 3)))
-    println(split2Rec(List('a', 'b', 'c')))
+        val tests = new TestsForLists()
+        tests.runTests()
   }
 
   /*
@@ -111,19 +106,20 @@ object Lists {
   def findMaxValue(list: List[Int]): Int = {
     // instead of declaring var result = 0 out of function, in object scope
     var result = Integer.MIN_VALUE
-    if (list.nonEmpty) {
-      @tailrec
-      def maxValue(list: List[Int]): Int = {
-        if (list.nonEmpty) {
-          if (list.head > result) {
-            result = list.head
-          }
-          maxValue(list.tail)
-        } else {
-          result
-        }
-      }
 
+    @tailrec
+    def maxValue(list: List[Int]): Int = {
+      if (list.nonEmpty) {
+        if (list.head > result) {
+          result = list.head
+        }
+        maxValue(list.tail)
+      } else {
+        result
+      }
+    }
+
+    if (list.nonEmpty) {
       maxValue(list)
     } else {
       result
@@ -257,7 +253,22 @@ object Lists {
   }
 
   def split2Tail[T](list: List[T]): (List[T], List[T]) = {
-    // todo nie wiem jak to zrobic
-    Nil -> Nil
+    @tailrec
+    def split[A](list: List[A], sameAsFirst: List[A], restOfAll: List[A], firstElement: A): (List[A], List[A]) = {
+      list match {
+        case Nil => (sameAsFirst, restOfAll.reverse)
+        case head :: tail =>
+          if (firstElement == list.head) {
+            split(tail, head :: sameAsFirst, restOfAll, firstElement)
+          } else {
+            split(tail, sameAsFirst, head :: restOfAll, firstElement)
+          }
+      }
+    }
+    if (list.nonEmpty){
+      split(list, Nil, Nil, list.head)
+    } else {
+      Nil->Nil
+    }
   }
 }
