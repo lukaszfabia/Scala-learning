@@ -4,9 +4,10 @@ import scala.annotation.tailrec
 
 object Lists {
   def main(args: Array[String]): Unit = {
-    val tests = new TestsForLists()
-    tests.runTests()
+//    val tests = new TestsForLists()
+//    tests.runTests()
   }
+
 
   /*
   @param list - lista list
@@ -237,7 +238,7 @@ object Lists {
       list match {
         case Nil => (even.reverse, odd.reverse)
         case head :: tail =>
-          if (!isEven) {
+          if (isEven) {
             split(tail, even, head :: odd, !isEven)
           } else {
             split(tail, head :: even, odd, !isEven)
@@ -245,11 +246,7 @@ object Lists {
       }
     }
 
-    if (list.nonEmpty) {
-      split(list, Nil, Nil, isEven = false)
-    } else {
-      (Nil, Nil)
-    }
+    split(list, Nil, Nil, isEven = false)
   }
 
   def split2Tail[T](list: List[T]): (List[T], List[T]) = {
@@ -265,12 +262,7 @@ object Lists {
           }
       }
     }
-
-    if (list.nonEmpty) {
-      split(list, Nil, Nil, list.head)
-    } else {
-      Nil -> Nil
-    }
+    split(list, Nil, Nil, list.head)
   }
 
   def fib(n: Int): Int = {
@@ -279,5 +271,38 @@ object Lists {
       case 1 => 1
       case _ => fib(n - 1) + fib(n - 2)
     }
+  }
+  def split2Primes(numbers: List[Int]): (List[Int], List[Int]) = {
+    @tailrec
+    def isPrime(number: Int, index: Int): Boolean = {
+      if (number < 2) {
+        false
+      } else {
+        if (index >= 2) {
+          if (number % index == 0) {
+            false
+          } else {
+            isPrime(number, index - 1)
+          }
+        } else {
+          true
+        }
+      }
+    }
+
+    @tailrec
+    def split(numbers: List[Int], primes: List[Int], nonPrimes: List[Int]): (List[Int], List[Int]) = {
+      numbers match {
+        case Nil => (primes.reverse, nonPrimes.reverse)
+        case head :: tail =>
+          if (isPrime(numbers.head, numbers.head - 1)) {
+            split(tail, head :: primes, nonPrimes)
+          } else {
+            split(tail, primes, head :: nonPrimes)
+          }
+      }
+    }
+
+    split(numbers, Nil, Nil)
   }
 }
