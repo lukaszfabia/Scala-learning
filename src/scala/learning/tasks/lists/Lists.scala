@@ -4,8 +4,8 @@ import scala.annotation.tailrec
 
 object Lists {
   def main(args: Array[String]): Unit = {
-        val tests = new TestsForLists()
-        tests.runTests()
+    val tests = new TestsForLists()
+    tests.runTests()
   }
 
   /*
@@ -265,10 +265,19 @@ object Lists {
           }
       }
     }
-    if (list.nonEmpty){
+
+    if (list.nonEmpty) {
       split(list, Nil, Nil, list.head)
     } else {
-      Nil->Nil
+      Nil -> Nil
+    }
+  }
+
+  def fib(n: Int): Int = {
+    n match {
+      case 0 => 0
+      case 1 => 1
+      case _ => fib(n - 1) + fib(n - 2)
     }
   }
 }

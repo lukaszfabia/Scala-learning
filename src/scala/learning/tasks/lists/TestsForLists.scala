@@ -1,6 +1,7 @@
 package scala.learning.tasks.lists
 
 class TestsForLists {
+
   def runTests(): Unit = {
     testForMergeList()
     testForCountElement()
@@ -19,6 +20,7 @@ class TestsForLists {
     testForRemoveDuplicates()
     testForSubstitute()
     testForSqrtList()
+    testForFib()
   }
 
   private def testForCountElement(): Unit = {
@@ -151,4 +153,13 @@ class TestsForLists {
     println()
   }
 
+  private def testForFib(): Unit = {
+    println("Tests for fib")
+    assert(Lists.fib(0) == 0)
+    assert(Lists.fib(1) == 1)
+    assert(Lists.fib(2) == 1)
+    assert(Lists.fib(3) == 2)
+    assert(Lists.fib(4) == 3)
+    assert(Lists.fib(5) == 5)
+  }
 }
