@@ -4,8 +4,12 @@ import scala.annotation.tailrec
 
 object Lists {
   def main(args: Array[String]): Unit = {
-    val tests = new TestsForLists()
-    tests.runTests()
+    //    val tests = new TestsForLists()
+    //    tests.runTests()
+    //    println(insertionSort((a: Int, b: Int) => a > b, List(1, 2, 3, 4, 5, 6, 7, 8)))
+    println(sumAndProd(List(2, 2, 2, 2)))
+    println(findMinMax(List(-1, 2, 3, 4, 1, 21, 2, 1, 4, 1231)))
+
   }
 
 
@@ -337,6 +341,41 @@ object Lists {
     }
 
     run(Nil, expression)
+  }
+
+  def sumAndProd(xs: List[Int]): (Int, Int) = xs.foldLeft(0, 1)((acc: (Int, Int), h: Int) =>
+    (acc._1 + h, acc._2 * h)
+  )
+
+  def sumOfEven(xs: List[Int]): Int = xs.foldLeft(0)((acc: Int, number: Int) =>
+    if (number % 2 == 0) acc + number else acc
+  )
+
+  def mean(xs: List[Int]): Double = xs.foldLeft(0)((acc: Int, number: Int) => acc + number) / xs.length
+
+  def findMinMax(xs: List[Int]): (Int, Int) = xs.foldLeft(Integer.MAX_VALUE, Integer.MIN_VALUE) {
+        // troche ulomne ale inczaej narzie nieweim 
+    (acc, number) => {
+      if (number < acc._1) {
+        (number, acc._2)
+      } else if (number > acc._2) {
+        (acc._1, number)
+      } else {
+        acc
+      }
+    }
+  }
+
+  def insertionSort[A](function: (A, A) => Boolean, list: List[A]): List[A] = {
+    def insert(number: A, sortedList: List[A]): List[A] = {
+      sortedList match {
+        case Nil => List(number)
+        case head :: _ if function(number, head) => number :: sortedList // gdy zachodzi to dodajemy liczbe do sortedlist
+        case head :: tail => head :: insert(number, tail) // jak nie to zostaiwamy
+      }
+    }
+
+    list.foldLeft(List.empty[A])((acc, head) => insert(head, acc))
   }
 
 }
