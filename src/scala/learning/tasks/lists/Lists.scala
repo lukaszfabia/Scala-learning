@@ -4,16 +4,8 @@ import scala.annotation.tailrec
 
 object Lists {
   def main(args: Array[String]): Unit = {
-//    val tests = new TestsForLists()
-//    tests.runTests()
-    println(split2Tail(List(1, 2, 3, 4, 5, 6, 7, 8)))
-    println(split2Tail(List(1, 1, 1, 1, 1, 1, 1, 1)))
-    println()
-    println(split2Rec(List(1, 2, 3, 4, 5, 6, 7, 8)))
-    println(split2Rec(List(1, 1, 1, 1, 1, 1, 1, 1)))
-    println()
-    val numbers = (0 to 100).toList
-    println(split2Primes(numbers))
+    val tests = new TestsForLists()
+    tests.runTests()
   }
 
 
@@ -229,10 +221,10 @@ object Lists {
 
   @tailrec
   def find[T](list: List[T], element: T): Boolean = list match {
-      case Nil => false
-      case head :: _ if head == element => true
-      case _ :: tail => find(tail, element)
-    }
+    case Nil => false
+    case head :: _ if head == element => true
+    case _ :: tail => find(tail, element)
+  }
 
   def split2Rec[T](list: List[T]): (List[T], List[T]) = {
     @tailrec
@@ -297,4 +289,54 @@ object Lists {
 
     split(numbers, Nil, Nil)
   }
+
+
+  def factorial(n: Int): Int = {
+    n match {
+      case 0 => 1
+      case 1 => 1
+      case _ => n * factorial(n - 1)
+    }
+  }
+
+  def power(base: Double, head: Double): Double = {
+    head match {
+      case 0 => 1
+      case _ => base * power(base, head - 1)
+    }
+  }
+
+  def RPN(expression: List[String]): Double = {
+    //1 2 + 3 / = (1+2)/3
+    @tailrec
+    def run(stack: List[Double], remaining: List[String]): Double = {
+      remaining match {
+        case Nil => stack.head
+        case head :: tail if head.forall(_.isDigit) => run(head.toDouble :: stack, tail)
+        case "+" :: tail =>
+          val res = stack(1) + stack.head
+          run(res :: stack, tail)
+        case "-" :: tail =>
+          val res = stack(1) - stack.head
+          run(res :: stack, tail)
+        case "/" :: tail =>
+          if (stack.head == 0) {
+            throw new IllegalArgumentException("div by 0")
+          } else {
+            val res = stack(1) / stack.head
+            run(res :: stack, tail)
+          }
+        case "*" :: tail =>
+          val res = stack(1) * stack.head
+          run(res :: stack, tail)
+        case "^" :: tail =>
+          val res = power(stack(1), stack.head)
+          run(res :: stack, tail)
+        case _ => throw new IllegalArgumentException("Wrong expression")
+      }
+    }
+
+    run(Nil, expression)
+  }
+
 }

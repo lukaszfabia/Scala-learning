@@ -22,6 +22,11 @@ class TestsForLists {
     testForSqrtList()
     testForFib()
     testsForFind()
+    testsForFactorial()
+    testsForRPN()
+    testForSplit2Rec()
+    testsForSplit2Tail()
+    testsForPrimes()
   }
 
   private def testForCountElement(): Unit = {
@@ -167,9 +172,47 @@ class TestsForLists {
 
   private def testsForFind(): Unit = {
     println("Tests for find")
-    assert(Lists.find(List(1,2,3,1,3,1,3),1))
-    assert(!Lists.find(List(1,2,3,1,3,1,3),20))
-    assert(!Lists.find(List(),0))
+    assert(Lists.find(List(1, 2, 3, 1, 3, 1, 3), 1))
+    assert(!Lists.find(List(1, 2, 3, 1, 3, 1, 3), 20))
+    assert(!Lists.find(List(), 0))
+    println()
+  }
+
+  private def testsForFactorial(): Unit = {
+    println("Tests for factorial")
+    assert(Lists.factorial(0) == 1)
+    assert(Lists.factorial(1) == 1)
+    assert(Lists.factorial(2) == 2)
+    assert(Lists.factorial(3) == 6)
+    assert(Lists.factorial(4) == 24)
+    println()
+  }
+
+  private def testsForRPN(): Unit = {
+    println("Tests for RPN")
+    assert(Lists.RPN(List("3", "4", "^", "2", "*")) == 162)
+    assert(Lists.RPN(List("3", "4", "*", "2", "+")) == 14)
+    println()
+  }
+
+  private def testForSplit2Rec(): Unit = {
+    println("Tests for split2Rec")
+    assert(Lists.split2Rec(List(1, 2, 3, 4, 5, 6, 7, 8)) == (List(1, 3, 5, 7), List(2, 4, 6, 8)))
+    assert(Lists.split2Rec(List(1, 1, 1, 1, 1, 1, 1, 1)) == (List(1, 1, 1, 1), List(1, 1, 1, 1)))
+    println()
+  }
+
+  private def testsForSplit2Tail(): Unit = {
+    println("Tests for split2Tail")
+    assert(Lists.split2Tail(List(1, 2, 3, 4, 5, 6, 7, 8)) == (List(1), List(2, 3, 4, 5, 6, 7, 8)))
+    assert(Lists.split2Tail(List(1, 1, 1, 1, 1, 1, 1, 1)) == (List(1, 1, 1, 1, 1, 1, 1, 1), List()))
+    println()
+  }
+
+  private def testsForPrimes(): Unit = {
+    val numbers = (0 to 10).toList
+    println("Tests for primes")
+    assert(Lists.split2Primes(numbers) == (List(2, 3, 5, 7), List(0,1,4,6,8,9,10)))
     println()
   }
 }
