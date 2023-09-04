@@ -6,6 +6,14 @@ object Lists {
   def main(args: Array[String]): Unit = {
 //    val tests = new TestsForLists()
 //    tests.runTests()
+    println(split2Tail(List(1, 2, 3, 4, 5, 6, 7, 8)))
+    println(split2Tail(List(1, 1, 1, 1, 1, 1, 1, 1)))
+    println()
+    println(split2Rec(List(1, 2, 3, 4, 5, 6, 7, 8)))
+    println(split2Rec(List(1, 1, 1, 1, 1, 1, 1, 1)))
+    println()
+    val numbers = (0 to 100).toList
+    println(split2Primes(numbers))
   }
 
 
@@ -220,29 +228,19 @@ object Lists {
   }
 
   @tailrec
-  def find[T](list: List[T], element: T): Boolean = {
-    if (list.nonEmpty) {
-      if (list.head == element) {
-        true
-      } else {
-        find(list.tail, element)
-      }
-    } else {
-      false
+  def find[T](list: List[T], element: T): Boolean = list match {
+      case Nil => false
+      case head :: _ if head == element => true
+      case _ :: tail => find(tail, element)
     }
-  }
 
   def split2Rec[T](list: List[T]): (List[T], List[T]) = {
     @tailrec
     def split[A](list: List[A], even: List[A], odd: List[A], isEven: Boolean): (List[A], List[A]) = {
       list match {
         case Nil => (even.reverse, odd.reverse)
-        case head :: tail =>
-          if (isEven) {
-            split(tail, even, head :: odd, !isEven)
-          } else {
-            split(tail, head :: even, odd, !isEven)
-          }
+        case head :: tail if isEven => split(tail, even, head :: odd, !isEven)
+        case head :: tail => split(tail, head :: even, odd, !isEven)
       }
     }
 
@@ -254,14 +252,11 @@ object Lists {
     def split[A](list: List[A], sameAsFirst: List[A], restOfAll: List[A], firstElement: A): (List[A], List[A]) = {
       list match {
         case Nil => (sameAsFirst, restOfAll.reverse)
-        case head :: tail =>
-          if (firstElement == list.head) {
-            split(tail, head :: sameAsFirst, restOfAll, firstElement)
-          } else {
-            split(tail, sameAsFirst, head :: restOfAll, firstElement)
-          }
+        case head :: tail if firstElement == list.head => split(tail, head :: sameAsFirst, restOfAll, firstElement)
+        case head :: tail => split(tail, sameAsFirst, head :: restOfAll, firstElement)
       }
     }
+
     split(list, Nil, Nil, list.head)
   }
 
@@ -272,6 +267,7 @@ object Lists {
       case _ => fib(n - 1) + fib(n - 2)
     }
   }
+
   def split2Primes(numbers: List[Int]): (List[Int], List[Int]) = {
     @tailrec
     def isPrime(number: Int, index: Int): Boolean = {
@@ -294,12 +290,8 @@ object Lists {
     def split(numbers: List[Int], primes: List[Int], nonPrimes: List[Int]): (List[Int], List[Int]) = {
       numbers match {
         case Nil => (primes.reverse, nonPrimes.reverse)
-        case head :: tail =>
-          if (isPrime(numbers.head, numbers.head - 1)) {
-            split(tail, head :: primes, nonPrimes)
-          } else {
-            split(tail, primes, head :: nonPrimes)
-          }
+        case head :: tail if isPrime(numbers.head, numbers.head - 1) => split(tail, head :: primes, nonPrimes)
+        case head :: tail => split(tail, primes, head :: nonPrimes)
       }
     }
 

@@ -21,6 +21,7 @@ class TestsForLists {
     testForSubstitute()
     testForSqrtList()
     testForFib()
+    testsForFind()
   }
 
   private def testForCountElement(): Unit = {
@@ -161,5 +162,14 @@ class TestsForLists {
     assert(Lists.fib(3) == 2)
     assert(Lists.fib(4) == 3)
     assert(Lists.fib(5) == 5)
+    println()
+  }
+
+  private def testsForFind(): Unit = {
+    println("Tests for find")
+    assert(Lists.find(List(1,2,3,1,3,1,3),1))
+    assert(!Lists.find(List(1,2,3,1,3,1,3),20))
+    assert(!Lists.find(List(),0))
+    println()
   }
 }
