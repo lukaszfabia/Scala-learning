@@ -6,9 +6,11 @@ object Lists {
   def main(args: Array[String]): Unit = {
     //    val tests = new TestsForLists()
     //    tests.runTests()
-    //    println(insertionSort((a: Int, b: Int) => a > b, List(1, 2, 3, 4, 5, 6, 7, 8)))
-    println(sumAndProd(List(2, 2, 2, 2)))
-    println(findMinMax(List(-1, 2, 3, 4, 1, 21, 2, 1, 4, 1231)))
+
+
+    println(revNComp((x: Int) => x * x + 2 * x + 1)(10)(0))
+    println(area(0.0, 1.0)(x => x * x)(2))
+    println(area(1.0, 4.0)(x => x)(10000))
 
   }
 
@@ -354,7 +356,7 @@ object Lists {
   def mean(xs: List[Int]): Double = xs.foldLeft(0)((acc: Int, number: Int) => acc + number) / xs.length
 
   def findMinMax(xs: List[Int]): (Int, Int) = xs.foldLeft(Integer.MAX_VALUE, Integer.MIN_VALUE) {
-        // troche ulomne ale inczaej narzie nieweim 
+    // troche ulomne ale inczaej narzie nieweim
     (acc, number) => {
       if (number < acc._1) {
         (number, acc._2)
@@ -377,5 +379,34 @@ object Lists {
 
     list.foldLeft(List.empty[A])((acc, head) => insert(head, acc))
   }
+
+  def revNComp(f: Int => Int)(n: Int)(x: Int): List[Int] = {
+    @tailrec
+    def innerRevNComp(f: Int => Int, n: Int, x: Int, list: List[Int]): List[Int] = {
+      n match {
+        case _ if n < 1 => Nil
+        case 1 => x :: list
+        case _ => innerRevNComp(f, n - 1, f(x), x :: list)
+      }
+    }
+
+    innerRevNComp(f, n, x, Nil)
+  }
+
+  def area(a: Double, b: Double)(f: Double => Double)(n: Int): Double = {
+    val diff = (b - a) / (n - 1)
+
+    def createList(amount: Int): List[Int] = {
+      amount match {
+        case _ if amount < n => amount :: createList(amount + 1)
+        case _ => Nil
+      }
+    }
+
+    val xs = createList(amount = 1)
+    val areas = xs.map(x => f(a + diff * x) * diff)
+    areas.foldLeft(0.0)((acc, x) => acc + x)
+  }
+
 
 }
