@@ -8,9 +8,8 @@ object Lists {
     //    tests.runTests()
 
 
-    println(revNComp((x: Int) => x * x + 2 * x + 1)(10)(0))
-    println(area(0.0, 1.0)(x => x * x)(2))
-    println(area(1.0, 4.0)(x => x)(10000))
+    //println(revNComp((x: Int) => x * x + 2 * x + 1)(10)(0))
+    println(value((n: Double)=>n+2*n)(10))
 
   }
 
@@ -380,6 +379,18 @@ object Lists {
     list.foldLeft(List.empty[A])((acc, head) => insert(head, acc))
   }
 
+  def value(f: Double => Double)(n: Double): List[Double] = {
+    @tailrec
+    def calculate(f: Double => Double, n: Double, index: Double, list: List[Double]): List[Double] = {
+      if (index < 0) {
+        list
+      } else {
+        calculate(f, n, index - 1, f(index) :: list)
+      }
+    }
+    calculate(f, n, index = n-1, Nil)
+  }
+
   def revNComp(f: Int => Int)(n: Int)(x: Int): List[Int] = {
     @tailrec
     def innerRevNComp(f: Int => Int, n: Int, x: Int, list: List[Int]): List[Int] = {
@@ -407,6 +418,5 @@ object Lists {
     val areas = xs.map(x => f(a + diff * x) * diff)
     areas.foldLeft(0.0)((acc, x) => acc + x)
   }
-
 
 }
