@@ -7,9 +7,11 @@ object Lists {
     //    val tests = new TestsForLists()
     //    tests.runTests()
 
-
-    //println(revNComp((x: Int) => x * x + 2 * x + 1)(10)(0))
-    println(value((n: Double)=>n+2*n)(10))
+    val precision = 1000
+//    println(area(0, 1)(x => x * x)(precision))
+//    println(area(0, 1)(x => x * x * x)(precision))
+//    println(area(-2, 1)(x => 2*x-1)(precision))
+    println(area(2, 3)(x => x*x)(precision))
 
   }
 
@@ -388,7 +390,8 @@ object Lists {
         calculate(f, n, index - 1, f(index) :: list)
       }
     }
-    calculate(f, n, index = n-1, Nil)
+
+    calculate(f, n, index = n - 1, Nil)
   }
 
   def revNComp(f: Int => Int)(n: Int)(x: Int): List[Int] = {
@@ -405,17 +408,14 @@ object Lists {
   }
 
   def area(a: Double, b: Double)(f: Double => Double)(n: Int): Double = {
-    val diff = (b - a) / (n - 1)
+    val h = (b - a) / n
 
     def createList(amount: Int): List[Int] = {
-      amount match {
-        case _ if amount < n => amount :: createList(amount + 1)
-        case _ => Nil
-      }
+      if (amount < n) amount :: createList(amount + 1) else Nil
     }
 
     val xs = createList(amount = 1)
-    val areas = xs.map(x => f(a + diff * x) * diff)
+    val areas = xs.map(x => f(a + h * x) * h)
     areas.foldLeft(0.0)((acc, x) => acc + x)
   }
 
