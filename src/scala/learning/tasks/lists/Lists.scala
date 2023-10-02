@@ -8,11 +8,15 @@ object Lists {
     //    tests.runTests()
 
     val precision = 1000
-//    println(area(0, 1)(x => x * x)(precision))
-//    println(area(0, 1)(x => x * x * x)(precision))
-//    println(area(-2, 1)(x => 2*x-1)(precision))
-    println(area(2, 3)(x => x*x)(precision))
-
+    //    println(area(0, 1)(x => x * x)(precision))
+    //    println(area(0, 1)(x => x * x * x)(precision))
+    //    println(area(-2, 1)(x => 2*x-1)(precision))
+    //    println(area(2, 3)(x => x*x)(precision))
+    //    println(area(Math.PI, 2*Math.PI)(x => Math.sin(x))(precision))
+    //    println(area(Math.PI, 2*Math.PI)(x => x/Math.sin(x))(precision))
+    println(derivative(x => Math.sin(x))(Math.PI))
+    println(derivative(x => Math.exp(x))(12))
+    println(derivative(x => Math.sin(x) * Math.cos(x))(Math.PI))
   }
 
 
@@ -408,15 +412,24 @@ object Lists {
   }
 
   def area(a: Double, b: Double)(f: Double => Double)(n: Int): Double = {
-    val h = (b - a) / n
+    if (n > 0) {
+      val h = (b - a) / n
 
-    def createList(amount: Int): List[Int] = {
-      if (amount < n) amount :: createList(amount + 1) else Nil
+      def createList(amount: Int): List[Int] = {
+        if (amount < n) amount :: createList(amount + 1) else Nil
+      }
+
+      val xs = createList(amount = 1)
+      val areas = xs.map(x => f(a + h * x) * h)
+      areas.foldLeft(0.0)((acc, x) => acc + x)
+    } else {
+      0
     }
+  }
 
-    val xs = createList(amount = 1)
-    val areas = xs.map(x => f(a + h * x) * h)
-    areas.foldLeft(0.0)((acc, x) => acc + x)
+  def derivative(f: Double => Double)(x: Double): Double = {
+    val h = 10e-12
+    Math.round((f(x + h) - f(x)) / h)
   }
 
 }
