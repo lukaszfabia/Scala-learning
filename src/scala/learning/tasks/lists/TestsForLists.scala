@@ -212,7 +212,7 @@ class TestsForLists {
   private def testsForPrimes(): Unit = {
     val numbers = (0 to 10).toList
     println("Tests for primes")
-    assert(Lists.split2Primes(numbers) == (List(2, 3, 5, 7), List(0,1,4,6,8,9,10)))
+    assert(Lists.split2Primes(numbers) == (List(2, 3, 5, 7).reverse, List(0,1,4,6,8,9,10).reverse))
     println()
   }
 }

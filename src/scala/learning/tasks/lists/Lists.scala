@@ -4,8 +4,8 @@ import scala.annotation.tailrec
 
 object Lists {
   def main(args: Array[String]): Unit = {
-    //    val tests = new TestsForLists()
-    //    tests.runTests()
+    val tests = new TestsForLists()
+    tests.runTests()
 
     val precision = 1000
     //    println(area(0, 1)(x => x * x)(precision))
@@ -14,9 +14,12 @@ object Lists {
     //    println(area(2, 3)(x => x*x)(precision))
     //    println(area(Math.PI, 2*Math.PI)(x => Math.sin(x))(precision))
     //    println(area(Math.PI, 2*Math.PI)(x => x/Math.sin(x))(precision))
-    println(derivative(x => Math.sin(x))(Math.PI))
-    println(derivative(x => Math.exp(x))(12))
-    println(derivative(x => Math.sin(x) * Math.cos(x))(Math.PI))
+    //    println(derivative(x => Math.sin(x))(Math.PI))
+    //    println(derivative(x => Math.exp(x))(12))
+    //    println(derivative(x => Math.sin(x) * Math.cos(x))(Math.PI))
+    //    println(derivative(x => x * x)(2))
+
+//    println(split2Rec(List(1,2,3,4,5,6,7,8)))
   }
 
 
@@ -59,7 +62,7 @@ object Lists {
   def replicate[T](element: T, n: Int): List[T] = {
     if (n > 0) {
       // doklejamy do listy element do listy n razy
-      List(element) ::: replicate(element, n - 1)
+      element :: replicate(element, n - 1)
     } else {
       Nil
     }
@@ -69,23 +72,11 @@ object Lists {
   @param list - lista liczb
    */
   def sqrtList(list: List[Int]): List[Int] = {
-    if (list.nonEmpty) {
-      List(list.head * list.head) ::: sqrtList(list.tail)
-    } else {
-      Nil
-    }
+    if (list.isEmpty) Nil
+    else list.head * list.head :: sqrtList(list.tail)
   }
 
-  @tailrec
-  def palindrome[T](list: List[T]): Boolean = {
-    if (list.length <= 1) {
-      true
-    } else if (list.head == list.last) {
-      palindrome(list.tail.init)
-    } else {
-      false
-    }
-  }
+  def palindrome[T](list: List[T]): Boolean = list.reverse == list
 
   def listLength[T](list: List[T]): Int = {
     if (list.nonEmpty) {
@@ -96,22 +87,23 @@ object Lists {
   }
 
   def reverseList[T](list: List[T]): List[T] = {
-    if (list != Nil) {
-      reverseList(list.tail) ::: List(list.head)
-    } else {
-      Nil
+    @tailrec
+    def aux[A](list1: List[A], output: List[A]): List[A] = {
+      list1 match {
+        case Nil => output
+        case head :: tail => aux(tail, head :: output)
+      }
     }
+
+    aux(list, Nil)
   }
 
   def filterOddNumbers(list: List[Int]): List[Int] = {
-    if (list.nonEmpty) {
-      if (list.head % 2 == 0) {
-        List(list.head) ::: filterOddNumbers(list.tail)
-      } else {
-        filterOddNumbers(list.tail)
-      }
-    } else {
-      Nil
+    list match {
+      case head :: tail =>
+        if (head % 2 == 0) head :: filterOddNumbers(tail)
+        else filterOddNumbers(tail)
+      case Nil => Nil
     }
   }
 
@@ -143,13 +135,12 @@ object Lists {
       if (list.tail.contains(list.head)) {
         removeDuplicates(list.tail)
       } else {
-        List(list.head) ::: removeDuplicates(list.tail)
+        list.head :: removeDuplicates(list.tail)
       }
     } else {
       Nil
     }
   }
-
 
   def fibonacciSequence(n: Int): List[Int] = {
     if (n > 0) {
@@ -238,16 +229,19 @@ object Lists {
   }
 
   def split2Rec[T](list: List[T]): (List[T], List[T]) = {
-    @tailrec
-    def split[A](list: List[A], even: List[A], odd: List[A], isEven: Boolean): (List[A], List[A]) = {
-      list match {
-        case Nil => (even.reverse, odd.reverse)
-        case head :: tail if isEven => split(tail, even, head :: odd, !isEven)
-        case head :: tail => split(tail, head :: even, odd, !isEven)
+    def split[A](list: List[A], isEven: Boolean): (List[A], List[A]) = {
+      (list, isEven) match {
+        case (Nil, _) => (Nil, Nil)
+        case (head :: tail, true) =>
+          val (even, odd) = split(tail, !isEven)
+          (even, head :: odd)
+        case (head :: tail, _) =>
+          val (even, odd) = split(tail, !isEven)
+          (head :: even, odd)
       }
     }
 
-    split(list, Nil, Nil, isEven = false)
+    split(list, false)
   }
 
   def split2Tail[T](list: List[T]): (List[T], List[T]) = {
@@ -292,7 +286,7 @@ object Lists {
     @tailrec
     def split(numbers: List[Int], primes: List[Int], nonPrimes: List[Int]): (List[Int], List[Int]) = {
       numbers match {
-        case Nil => (primes.reverse, nonPrimes.reverse)
+        case Nil => (primes, nonPrimes)
         case head :: tail if isPrime(numbers.head, numbers.head - 1) => split(tail, head :: primes, nonPrimes)
         case head :: tail => split(tail, primes, head :: nonPrimes)
       }
